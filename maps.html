@@ -1,9 +1,9 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head>
     <title>Place Autocomplete Hotel Search</title>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta charset="utf-8" />
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -11,7 +11,8 @@
         height: 100%;
       }
       /* Optional: Makes the sample page fill the window. */
-      html, body {
+      html,
+      body {
         height: 100%;
         margin: 0;
         padding: 0;
@@ -20,7 +21,7 @@
         padding: 0 !important;
       }
       table {
-        font-size: 12px;
+        font-size: 18px;
       }
       .hotel-search {
         -webkit-box-align: center;
@@ -30,6 +31,8 @@
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
+        flex-direction: column;
+        justify-content: space-around;
         left: 0;
         position: absolute;
         top: 0;
@@ -98,36 +101,42 @@
         text-align: right;
       }
     </style>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
   </head>
 
   <body>
-
     <div class="hotel-search">
-      <div id="findhotels">
-        Find nearby restaurants:
-      </div>
+      <div id="findhotels">Find nearby restaurants:</div>
 
-      <div id="locationField">
-        <input id="autocomplete" placeholder="Enter a location" type="text" />
-      </div>
+      <div class="row">
+        <div id="locationField">
+          <input id="autocomplete" placeholder="Enter a location" type="text" />
+        </div>
+        <br />
+        <br />
 
-      <div id="controls">
-        <select id="country">
-          <option value="all" >All</option>
-          <option value="au">Australia</option>
-          <option value="br">Brazil</option>
-          <option value="ca">Canada</option>
-          <option value="fr">France</option>
-          <option value="de">Germany</option>
-          <option value="mx">Mexico</option>
-          <option value="nz">New Zealand</option>
-          <option value="it">Italy</option>
-          <option value="za">South Africa</option>
-          <option value="es">Spain</option>
-          <option value="pt">Portugal</option>
-          <option value="us" selected >U.S.A.</option>
-          <option value="uk">United Kingdom</option>
-        </select>
+        <div id="controls">
+          <br />
+          <select id="country">
+            <option value="all">All</option>
+            <option value="au">Australia</option>
+            <option value="br">Brazil</option>
+            <option value="ca">Canada</option>
+            <option value="fr">France</option>
+            <option value="de">Germany</option>
+            <option value="mx">Mexico</option>
+            <option value="nz">New Zealand</option>
+            <option value="it">Italy</option>
+            <option value="za">South Africa</option>
+            <option value="es">Spain</option>
+            <option value="pt">Portugal</option>
+            <option value="us" selected>U.S.A.</option>
+            <option value="uk">United Kingdom</option>
+          </select>
+        </div>
       </div>
     </div>
 
@@ -170,128 +179,136 @@
       var map, places, infoWindow;
       var markers = [];
       var autocomplete;
-      var countryRestrict = {'country': 'us'};
-      var MARKER_PATH = 'https://developers.google.com/maps/documentation/javascript/images/marker_green';
-      var hostnameRegexp = new RegExp('^https?://.+?/');
+      var countryRestrict = { country: "us" };
+      var MARKER_PATH =
+        "https://developers.google.com/maps/documentation/javascript/images/marker_green";
+      var hostnameRegexp = new RegExp("^https?://.+?/");
 
       var countries = {
-        'au': {
-          center: {lat: -25.3, lng: 133.8},
-          zoom: 4
+        au: {
+          center: { lat: -25.3, lng: 133.8 },
+          zoom: 4,
         },
-        'br': {
-          center: {lat: -14.2, lng: -51.9},
-          zoom: 3
+        br: {
+          center: { lat: -14.2, lng: -51.9 },
+          zoom: 3,
         },
-        'ca': {
-          center: {lat: 62, lng: -110.0},
-          zoom: 3
+        ca: {
+          center: { lat: 62, lng: -110.0 },
+          zoom: 3,
         },
-        'fr': {
-          center: {lat: 46.2, lng: 2.2},
-          zoom: 5
+        fr: {
+          center: { lat: 46.2, lng: 2.2 },
+          zoom: 5,
         },
-        'de': {
-          center: {lat: 51.2, lng: 10.4},
-          zoom: 5
+        de: {
+          center: { lat: 51.2, lng: 10.4 },
+          zoom: 5,
         },
-        'mx': {
-          center: {lat: 23.6, lng: -102.5},
-          zoom: 4
+        mx: {
+          center: { lat: 23.6, lng: -102.5 },
+          zoom: 4,
         },
-        'nz': {
-          center: {lat: -40.9, lng: 174.9},
-          zoom: 5
+        nz: {
+          center: { lat: -40.9, lng: 174.9 },
+          zoom: 5,
         },
-        'it': {
-          center: {lat: 41.9, lng: 12.6},
-          zoom: 5
+        it: {
+          center: { lat: 41.9, lng: 12.6 },
+          zoom: 5,
         },
-        'za': {
-          center: {lat: -30.6, lng: 22.9},
-          zoom: 5
+        za: {
+          center: { lat: -30.6, lng: 22.9 },
+          zoom: 5,
         },
-        'es': {
-          center: {lat: 40.5, lng: -3.7},
-          zoom: 5
+        es: {
+          center: { lat: 40.5, lng: -3.7 },
+          zoom: 5,
         },
-        'pt': {
-          center: {lat: 39.4, lng: -8.2},
-          zoom: 6
+        pt: {
+          center: { lat: 39.4, lng: -8.2 },
+          zoom: 6,
         },
-        'us': {
-          center: {lat: 37.1, lng: -95.7},
-          zoom: 3
+        us: {
+          center: { lat: 37.1, lng: -95.7 },
+          zoom: 3,
         },
-        'uk': {
-          center: {lat: 54.8, lng: -4.6},
-          zoom: 5
-        }
+        uk: {
+          center: { lat: 54.8, lng: -4.6 },
+          zoom: 5,
+        },
       };
-      var lt,lg,gpos;
+      var lt, lg, gpos;
       function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          zoom: countries['us'].zoom,
-          center: countries['us'].center,
+        map = new google.maps.Map(document.getElementById("map"), {
+          zoom: countries["us"].zoom,
+          center: countries["us"].center,
           mapTypeControl: false,
           panControl: false,
           zoomControl: false,
-          streetViewControl: false
+          streetViewControl: false,
         });
 
         infoWindow = new google.maps.InfoWindow({
-          content: document.getElementById('info-content')
+          content: document.getElementById("info-content"),
         });
-         // Try HTML5 geolocation.
-         if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
-            console.log(pos);
-            lt=pos.lat;
-            lg=pos.lng;
-            gpos=pos;
-            infoWindow.setPosition(pos);
-            infoWindow.setContent('I am here.');
-            infoWindow.open(map);
-            map.setCenter(pos);
-          }, function() {
-            handleLocationError(true, infoWindow, map.getCenter());
-          });
-        } 
-        else {
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            function (position) {
+              var pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+              };
+              console.log(pos);
+              lt = pos.lat;
+              lg = pos.lng;
+              gpos = pos;
+              infoWindow.setPosition(pos);
+              infoWindow.setContent("I am here.");
+              infoWindow.open(map);
+              map.setCenter(pos);
+            },
+            function () {
+              handleLocationError(true, infoWindow, map.getCenter());
+            }
+          );
+        } else {
           // Browser doesn't support Geolocation
           handleLocationError(false, infoWindow, map.getCenter());
         }
 
-
         // Create the autocomplete object and associate it with the UI input control.
         // Restrict the search to the default country, and to place type "cities".
         autocomplete = new google.maps.places.Autocomplete(
-            /** @type {!HTMLInputElement} */ (
-                document.getElementById('autocomplete')), {
-              types: ['(regions)'],
-              componentRestrictions: countryRestrict
-            });
+          /** @type {!HTMLInputElement} */ (document.getElementById(
+            "autocomplete"
+          )),
+          {
+            types: ["(regions)"],
+            componentRestrictions: countryRestrict,
+          }
+        );
         places = new google.maps.places.PlacesService(map);
 
-        autocomplete.addListener('place_changed', onPlaceChanged);
+        autocomplete.addListener("place_changed", onPlaceChanged);
 
         // Add a DOM event listener to react when the user selects a country.
-        document.getElementById('country').addEventListener(
-            'change', setAutocompleteCountry);
+        document
+          .getElementById("country")
+          .addEventListener("change", setAutocompleteCountry);
       }
       function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         infoWindow.setPosition(pos);
-        infoWindow.setContent(browserHasGeolocation ?
-                              'Error: The Geolocation service failed.' :
-                              'Error: Your browser doesn\'t support geolocation.');
+        infoWindow.setContent(
+          browserHasGeolocation
+            ? "Error: The Geolocation service failed."
+            : "Error: Your browser doesn't support geolocation."
+        );
         infoWindow.open(map);
       }
 
-      var nearbydata=[];
+      var nearbydata = [];
 
       // When the user selects a city, get the place details for the city and
       // zoom the map in on the city.
@@ -299,24 +316,31 @@
         var place = autocomplete.getPlace();
         // console.log(place);
         console.log("hi");
-        console.log(lt+" "+lg);
-        let url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+lt+','+lg+'&radius=1500&type=restaurant&key=add-key-here'
+        console.log(lt + " " + lg);
+        let url =
+          "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" +
+          lt +
+          "," +
+          lg +
+          "&radius=1500&type=restaurant&key=add-key-here";
         const proxyurl = "https://cors-anywhere.herokuapp.com/";
 
         fetch(proxyurl + url)
-        .then(res => res.json())
-        .then(out => {
-        for (var i = 0; i < out.results.length; i++) {
-        nearbydata[i] = out.results[i];
-        }
-        console.log(nearbydata);            
-        // console.log('Checkout this JSON! ', out.results[0].name);
-        })
-        .catch(err => { throw err });
+          .then((res) => res.json())
+          .then((out) => {
+            for (var i = 0; i < out.results.length; i++) {
+              nearbydata[i] = out.results[i];
+            }
+            console.log(nearbydata);
+            // console.log('Checkout this JSON! ', out.results[0].name);
+          })
+          .catch((err) => {
+            throw err;
+          });
         console.log(nearbydata); // this line will "wait" for the previous to be completed
-        // console.log(response.json()); 
+        // console.log(response.json());
         // for (var i = 0; i < out.results.length; i++) {
-        //     console.log(out.results[i].name);            
+        //     console.log(out.results[i].name);
         // }
         //    data around specific lat and long
         // https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=1500&type=restaurant&key=AIzaSyCBKN2tQUEvEKuiOj_NSwZSHeFgDHHLXxs
@@ -325,7 +349,7 @@
           map.setZoom(15);
           search();
         } else {
-          document.getElementById('autocomplete').placeholder = 'Enter a city';
+          document.getElementById("autocomplete").placeholder = "Enter a city";
         }
       }
 
@@ -333,18 +357,20 @@
       function search() {
         var search = {
           bounds: map.getBounds(),
-          types: ['restaurant']
+          types: ["restaurant"],
         };
 
-        places.nearbySearch(search, function(results, status) {
+        places.nearbySearch(search, function (results, status) {
           if (status === google.maps.places.PlacesServiceStatus.OK) {
             clearResults();
             clearMarkers();
             // Create a marker for each hotel found, and
             // assign a letter of the alphabetic to each marker icon.
             for (var i = 0; i < results.length; i++) {
-              var markerLetter = String.fromCharCode('A'.charCodeAt(0) + (i % 26));
-              var markerIcon = MARKER_PATH + markerLetter + '.png';
+              var markerLetter = String.fromCharCode(
+                "A".charCodeAt(0) + (i % 26)
+              );
+              var markerIcon = MARKER_PATH + markerLetter + ".png";
               // Use marker animation to drop the icons incrementally on the map.
               markers[i] = new google.maps.Marker({
                 position: results[i].geometry.location,
@@ -353,7 +379,11 @@
               // If the user clicks a hotel marker, show the details of that hotel
               // in an info window.
               markers[i].placeResult = results[i];
-              google.maps.event.addListener(markers[i], 'click', showInfoWindow);
+              google.maps.event.addListener(
+                markers[i],
+                "click",
+                showInfoWindow
+              );
               setTimeout(dropMarker(i), i * 100);
               addResult(results[i], i);
             }
@@ -373,13 +403,13 @@
       // Set the country restriction based on user input.
       // Also center and zoom the map on the given country.
       function setAutocompleteCountry() {
-        var country = document.getElementById('country').value;
-        if (country == 'all') {
-          autocomplete.setComponentRestrictions({'country': []});
-          map.setCenter({lat: 15, lng: 0});
+        var country = document.getElementById("country").value;
+        if (country == "all") {
+          autocomplete.setComponentRestrictions({ country: [] });
+          map.setCenter({ lat: 15, lng: 0 });
           map.setZoom(2);
         } else {
-          autocomplete.setComponentRestrictions({'country': country});
+          autocomplete.setComponentRestrictions({ country: country });
           map.setCenter(countries[country].center);
           map.setZoom(countries[country].zoom);
         }
@@ -388,28 +418,28 @@
       }
 
       function dropMarker(i) {
-        return function() {
+        return function () {
           markers[i].setMap(map);
         };
       }
 
       function addResult(result, i) {
-        var results = document.getElementById('results');
-        var markerLetter = String.fromCharCode('A'.charCodeAt(0) + (i % 26));
-        var markerIcon = MARKER_PATH + markerLetter + '.png';
+        var results = document.getElementById("results");
+        var markerLetter = String.fromCharCode("A".charCodeAt(0) + (i % 26));
+        var markerIcon = MARKER_PATH + markerLetter + ".png";
 
-        var tr = document.createElement('tr');
-        tr.style.backgroundColor = (i % 2 === 0 ? '#F0F0F0' : '#FFFFFF');
-        tr.onclick = function() {
-          google.maps.event.trigger(markers[i], 'click');
+        var tr = document.createElement("tr");
+        tr.style.backgroundColor = i % 2 === 0 ? "#F0F0F0" : "#FFFFFF";
+        tr.onclick = function () {
+          google.maps.event.trigger(markers[i], "click");
         };
 
-        var iconTd = document.createElement('td');
-        var nameTd = document.createElement('td');
-        var icon = document.createElement('img');
+        var iconTd = document.createElement("td");
+        var nameTd = document.createElement("td");
+        var icon = document.createElement("img");
         icon.src = markerIcon;
-        icon.setAttribute('class', 'placeIcon');
-        icon.setAttribute('className', 'placeIcon');
+        icon.setAttribute("class", "placeIcon");
+        icon.setAttribute("className", "placeIcon");
         var name = document.createTextNode(result.name);
         iconTd.appendChild(icon);
         nameTd.appendChild(name);
@@ -419,7 +449,7 @@
       }
 
       function clearResults() {
-        var results = document.getElementById('results');
+        var results = document.getElementById("results");
         while (results.childNodes[0]) {
           results.removeChild(results.childNodes[0]);
         }
@@ -429,48 +459,50 @@
       // anchored on the marker for the hotel that the user selected.
       function showInfoWindow() {
         var marker = this;
-        places.getDetails({placeId: marker.placeResult.place_id},
-            function(place, status) {
-              if (status !== google.maps.places.PlacesServiceStatus.OK) {
-                return;
-              }
-              infoWindow.open(map, marker);
-              buildIWContent(place);
-            });
+        places.getDetails({ placeId: marker.placeResult.place_id }, function (
+          place,
+          status
+        ) {
+          if (status !== google.maps.places.PlacesServiceStatus.OK) {
+            return;
+          }
+          infoWindow.open(map, marker);
+          buildIWContent(place);
+        });
       }
 
       // Load the place information into the HTML elements used by the info window.
       function buildIWContent(place) {
-        document.getElementById('iw-icon').innerHTML = '<img class="hotelIcon" ' +
-            'src="' + place.icon + '"/>';
-        document.getElementById('iw-url').innerHTML = '<b><a href="' + place.url +
-            '">' + place.name + '</a></b>';
-        document.getElementById('iw-address').textContent = place.vicinity;
+        document.getElementById("iw-icon").innerHTML =
+          '<img class="hotelIcon" ' + 'src="' + place.icon + '"/>';
+        document.getElementById("iw-url").innerHTML =
+          '<b><a href="' + place.url + '">' + place.name + "</a></b>";
+        document.getElementById("iw-address").textContent = place.vicinity;
 
         if (place.formatted_phone_number) {
-          document.getElementById('iw-phone-row').style.display = '';
-          document.getElementById('iw-phone').textContent =
-              place.formatted_phone_number;
+          document.getElementById("iw-phone-row").style.display = "";
+          document.getElementById("iw-phone").textContent =
+            place.formatted_phone_number;
         } else {
-          document.getElementById('iw-phone-row').style.display = 'none';
+          document.getElementById("iw-phone-row").style.display = "none";
         }
 
         // Assign a five-star rating to the hotel, using a black star ('&#10029;')
         // to indicate the rating the hotel has earned, and a white star ('&#10025;')
         // for the rating points not achieved.
         if (place.rating) {
-          var ratingHtml = '';
+          var ratingHtml = "";
           for (var i = 0; i < 5; i++) {
-            if (place.rating < (i + 0.5)) {
-              ratingHtml += '&#10025;';
+            if (place.rating < i + 0.5) {
+              ratingHtml += "&#10025;";
             } else {
-              ratingHtml += '&#10029;';
+              ratingHtml += "&#10029;";
             }
-          document.getElementById('iw-rating-row').style.display = '';
-          document.getElementById('iw-rating').innerHTML = ratingHtml;
+            document.getElementById("iw-rating-row").style.display = "";
+            document.getElementById("iw-rating").innerHTML = ratingHtml;
           }
         } else {
-          document.getElementById('iw-rating-row').style.display = 'none';
+          document.getElementById("iw-rating-row").style.display = "none";
         }
 
         // The regexp isolates the first part of the URL (domain plus subdomain)
@@ -479,17 +511,20 @@
           var fullUrl = place.website;
           var website = hostnameRegexp.exec(place.website);
           if (website === null) {
-            website = 'http://' + place.website + '/';
+            website = "http://" + place.website + "/";
             fullUrl = website;
           }
-          document.getElementById('iw-website-row').style.display = '';
-          document.getElementById('iw-website').textContent = website;
+          document.getElementById("iw-website-row").style.display = "";
+          document.getElementById("iw-website").textContent = website;
         } else {
-          document.getElementById('iw-website-row').style.display = 'none';
+          document.getElementById("iw-website-row").style.display = "none";
         }
       }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=add-key-here&libraries=places&callback=initMap"
-        async defer></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=add-key-here&libraries=places&callback=initMap"
+      async
+      defer
+    ></script>
   </body>
 </html>
